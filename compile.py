@@ -69,7 +69,6 @@ def main():
     mark_eol_versions(versions)
     with open("./data/versions.json", "w") as f:
         json.dump(versions, f, sort_keys=True, indent=4)
-    print(versions)
 
 
 if __name__ == '__main__':
