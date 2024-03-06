@@ -3,6 +3,7 @@ import re
 import urllib.request
 from datetime import datetime
 
+TIMEOUT = 3
 section_re = r"<section .*?>(.*?)<\/section>"
 
 
@@ -19,7 +20,7 @@ def load_php_releases():
     months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October',
               'November', 'December']
 
-    contents = urllib.request.urlopen("https://www.php.net/releases/").read().decode()
+    contents = urllib.request.urlopen("https://www.php.net/releases/", timeout=TIMEOUT).read().decode()
     matches = re.findall(section_re, contents, re.DOTALL)
     if len(matches) != 1:
         return []
@@ -51,7 +52,7 @@ def mark_last_version(versions):
 
 
 def mark_eol_versions(versions):
-    contents = urllib.request.urlopen("https://www.php.net/eol.php").read().decode()
+    contents = urllib.request.urlopen("https://www.php.net/eol.php", timeout=TIMEOUT).read().decode()
     matches = re.findall(section_re, contents, re.DOTALL)
     if len(matches) != 1:
         return
